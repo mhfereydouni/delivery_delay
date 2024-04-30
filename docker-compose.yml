@@ -1,0 +1,52 @@
+services:
+    app:
+        build:
+            context: docker
+            dockerfile: php.dockerfile
+        ports:
+            - 80:8000
+        volumes:
+            - ./:/var/www/html
+        depends_on:
+            mysql:
+                condition: service_healthy
+        entrypoint: ["php", "artisan", "octane:start", "--host=0.0.0.0", "--workers=4", "--task-workers=1"]
+        restart: unless-stopped
+    mysql:
+        build:
+            context: docker
+            dockerfile: mariadb.dockerfile
+        ports:
+            - "3306:3306"
+        environment:
+            MARIADB_ROOT_PASSWORD: 123
+            MARIADB_DATABASE: delivery_delay
+            MARIADB_USER: delivery_delay
+            MARIADB_PASSWORD: 123
+            MARIADB_EXTRA_FLAGS: --max_connections=1000
+        volumes:
+            - ./docker/mysql:/bitnami/mariadb
+        restart: unless-stopped
+        healthcheck:
+            test: "mariadb --user=delivery_delay --password=123 --execute \"SHOW DATABASES;\""
+            interval: 5s
+            timeout: 20s
+            retries: 10
+            start_period: 120s
+    artisan:
+        build:
+            context: docker
+            dockerfile: php.dockerfile
+        depends_on:
+            mysql:
+                condition: service_healthy
+        volumes:
+            - ./:/var/www/html
+        entrypoint: [ "php", "/var/www/html/artisan" ]
+    composer:
+        build:
+            context: docker
+            dockerfile: php.dockerfile
+        volumes:
+            - ./:/var/www/html
+        entrypoint: [ "composer" ]
