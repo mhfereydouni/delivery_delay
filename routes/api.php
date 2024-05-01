@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\EstimateDeliveryTimeController;
+use App\Http\Controllers\IndexVendorsDelayController;
 use App\Http\Controllers\ReportDelayController;
 use App\Http\Controllers\ShowAgentAssignedDelayReportController;
 use Illuminate\Support\Facades\Route;
+
+Route::prefix('vendors')->name('vendors.')->group(function () {
+    Route::get('delays', IndexVendorsDelayController::class)->name('delays');
+});
 
 Route::prefix('orders')->name('orders.')->group(function () {
     Route::prefix('{order}')->group(function () {

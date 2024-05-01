@@ -1,21 +1,22 @@
 <?php
 
-namespace Database\Seeders;
+namespace Tests\Feature;
 
 use App\Models\Agent;
 use App\Models\DelayReport;
 use App\Models\Order;
 use App\Models\Trip;
 use App\Models\Vendor;
-use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Tests\TestCase;
 
-class DatabaseSeeder extends Seeder
+class IndexVendorsDelayTest extends TestCase
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    use RefreshDatabase;
+
+    /** @test */
+    public function it_can_list_vendors_that_have_delay_report_in_last_week_sorted(): void
     {
         $start = Carbon::now()->subDay();
 
@@ -110,5 +111,19 @@ class DatabaseSeeder extends Seeder
             'created_at' => $start,
             'delivery_time' => 20,
         ]);
+
+        $this->getJson(route('vendors.delays'))
+            ->assertOk()
+            ->assertJsonCount(2, 'data')
+            ->assertJson(['data' => [
+                [
+                    'vendor_id' => $vendor2->id,
+                    'total_delay' => 20,
+                ],
+                [
+                    'vendor_id' => $vendor1->id,
+                    'total_delay' => 5,
+                ],
+            ]]);
     }
 }
