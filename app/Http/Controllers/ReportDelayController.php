@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\GetNewDeliveryEstimation;
+use App\Enums\TripStatus;
 use App\Models\Order;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
@@ -11,7 +12,7 @@ class ReportDelayController extends Controller
 {
     public function __invoke(GetNewDeliveryEstimation $getNewDeliveryEstimation, Order $order): JsonResponse
     {
-        if ($order->trip()->whereIn('status', ['ASSIGNED', 'AT_VENDOR', 'PICKED'])->exists()) {
+        if ($order->trip()->whereIn('status', TripStatus::notDelivered())->exists()) {
             $newDeliveryTime = ($getNewDeliveryEstimation)($order->id);
 
             $order->delayReports()->create(['resolved_at' => Carbon::now()]);

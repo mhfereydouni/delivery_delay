@@ -15,7 +15,7 @@ class ShowAgentAssignedDelayReportController extends Controller
             return DelayReportResource::make($delayReport);
         }
 
-        DB::transaction(function () use ($agent) {
+        $delayReport = DB::transaction(function () use ($agent) {
             $delayReport = DelayReport::query()
                 ->whereNull('agent_id')
                 ->whereNull('resolved_at')
@@ -26,6 +26,8 @@ class ShowAgentAssignedDelayReportController extends Controller
             if (!is_null($delayReport) && is_null($delayReport->agent_id)) {
                 $delayReport?->update(['agent_id' => $agent->id]);
             }
+
+            return $delayReport;
         }, 3);
 
         return DelayReportResource::make($delayReport);

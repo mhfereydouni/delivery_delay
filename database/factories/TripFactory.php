@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TripStatus;
 use App\Models\Order;
 use App\Models\Trip;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -15,7 +16,7 @@ class TripFactory extends Factory
     {
         return [
             'order_id' => fn() => Order::factory()->create()->id,
-            'status' => $this->faker->randomElement(['ASSIGNED', 'AT_VENDOR', 'PICKED', 'DELIVERED']),
+            'status' => $this->faker->randomElement(TripStatus::cases()),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
@@ -23,26 +24,26 @@ class TripFactory extends Factory
 
     public function assigned(): static
     {
-        return $this->state(['status' => 'ASSIGNED']);
+        return $this->state(['status' => TripStatus::ASSIGNED]);
     }
 
     public function atVendor(): static
     {
-        return $this->state(['status' => 'AT_VENDOR']);
+        return $this->state(['status' => TripStatus::AT_VENDOR]);
     }
 
     public function picked(): static
     {
-        return $this->state(['status' => 'PICKED']);
+        return $this->state(['status' => TripStatus::PICKED]);
     }
 
     public function delivered(): static
     {
-        return $this->state(['status' => 'DELIVERED']);
+        return $this->state(['status' => TripStatus::DELIVERED]);
     }
 
     public function notDelivered(): static
     {
-        return $this->state(['status' => $this->faker->randomElement(['ASSIGNED', 'AT_VENDOR', 'PICKED'])]);
+        return $this->state(['status' => $this->faker->randomElement(TripStatus::notDelivered())]);
     }
 }
