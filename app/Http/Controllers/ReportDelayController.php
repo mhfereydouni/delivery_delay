@@ -20,17 +20,17 @@ class ReportDelayController extends Controller
             return response()->json(['data' => [
                 'new_delivery_time' => $newDeliveryTime,
                 'will_arrive_at' => Carbon::now()->addMinutes($newDeliveryTime)->toDateTimeString()
-            ]]);
+            ]], 201);
         }
 
         if ($order->delayReports()->whereNull('resolved_at')->exists()) {
 
-            return response()->json('Your last delay report is still under investigation.');
+            return response()->json(['message' => 'Your last delay report is still under investigation.']);
         }
 
 
         $order->delayReports()->create();
 
-        return response()->json('Your order delivery will be investigated by agents.', 201);
+        return response()->json(['message' => 'Your order delivery will be investigated by agents.'], 201);
     }
 }

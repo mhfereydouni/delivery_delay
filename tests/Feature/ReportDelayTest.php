@@ -77,7 +77,7 @@ class ReportDelayTest extends TestCase
         $this->freezeTime(function () use ($newEta, $order) {
             $this
                 ->postJson(route('orders.report-delay', ['order' => $order]))
-                ->assertOk()
+                ->assertCreated()
                 ->assertJson([
                     'data' => [
                         'new_delivery_time' => $newEta,
