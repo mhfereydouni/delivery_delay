@@ -32,7 +32,6 @@ class ReportDelayTest extends TestCase
         $this->travel(11)->minutes();
 
         $this->postJson(route('orders.report-delay', ['order' => $order]))
-            ->dump()
             ->assertCreated();
 
         $this->assertDatabaseHas(DelayReport::class, [
