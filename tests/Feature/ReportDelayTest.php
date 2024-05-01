@@ -66,7 +66,7 @@ class ReportDelayTest extends TestCase
         $order = Order::factory()->create(['delivery_time' => 0]);
 
         Http::fake([
-            'localhost/orders/' . $order->id . '/eta-mock' => Http::response([
+            'http://localhost/orders/' . $order->id . '/eta-mock' => Http::response([
                 'data' => ['eta' => $newEta = random_int(10, 100)]
             ]),
         ]);
@@ -93,7 +93,7 @@ class ReportDelayTest extends TestCase
 
             Http::assertSent(
                 fn(Request $request) => $request->method() === 'GET'
-                    && $request->url() === 'localhost/orders/' . $order->id . '/eta-mock'
+                    && $request->url() === 'http://localhost/orders/' . $order->id . '/eta-mock'
             );
         });
     }

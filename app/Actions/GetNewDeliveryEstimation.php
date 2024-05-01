@@ -11,7 +11,7 @@ class GetNewDeliveryEstimation
         return Http::withoutVerifying()
             ->acceptJson()
             ->asJson()
-            ->get('localhost/orders/'.$orderId.'/eta-mock')
+            ->get(config('app.url').'/orders/'.$orderId.'/eta-mock')
             ->json('data.eta');
     }
 }
