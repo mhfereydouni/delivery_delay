@@ -1,19 +1,15 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\EstimateDeliveryTimeController;
+use App\Http\Controllers\ReportDelayController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::prefix('orders')->name('orders.')->group(function () {
+    Route::prefix('{order}')->group(function () {
+        Route::get('eta-mock', EstimateDeliveryTimeController::class)->name('eta-mock');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+        Route::post('report-delay', ReportDelayController::class)
+            ->can('reportDelay', 'order')
+            ->name('report-delay');
+    });
 });

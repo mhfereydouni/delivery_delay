@@ -40,4 +40,9 @@ class TripFactory extends Factory
     {
         return $this->state(['status' => 'DELIVERED']);
     }
+
+    public function notDelivered(): static
+    {
+        return $this->state(['status' => $this->faker->randomElement(['ASSIGNED', 'AT_VENDOR', 'PICKED'])]);
+    }
 }
