@@ -14,7 +14,7 @@ class Order extends Model
 
     protected $table = 'orders';
 
-    protected $fillable = ['vendor_id', 'delivered_at', 'created_at', 'updated_at'];
+    protected $fillable = ['vendor_id', 'delivery_time', 'created_at', 'updated_at'];
 
     public function vendor(): BelongsTo
     {
@@ -23,7 +23,12 @@ class Order extends Model
 
     public function trip(): HasOne
     {
-        return $this->hasOne(Trip::class);
+        return $this->hasOne(Trip::class)->latestOfMany();
+    }
+
+    public function trips(): HasMany
+    {
+        return $this->hasMany(Trip::class);
     }
 
     public function delayReports(): HasMany

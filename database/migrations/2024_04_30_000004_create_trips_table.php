@@ -10,9 +10,13 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('order_id');
             $table->enum('status', ['ASSIGNED', 'AT_VENDOR', 'PICKED', 'DELIVERED']);
             $table->timestamps();
+
+            $table->unique(['order_id', 'status']);
+
+            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 };

@@ -10,7 +10,7 @@ class DelayReport extends Model
 {
     use HasFactory;
 
-    protected $table = 'delayed_reports';
+    protected $table = 'delay_reports';
 
     protected $fillable = ['order_id', 'agent_id', 'resolved_at', 'created_at', 'updated_at'];
 

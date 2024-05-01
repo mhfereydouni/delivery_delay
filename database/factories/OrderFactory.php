@@ -15,7 +15,7 @@ class OrderFactory extends Factory
     {
         return [
             'vendor_id' => fn() => Vendor::factory()->create()->id,
-            'delivered_at' => Carbon::now()->addMinutes(random_int(10, 120)),
+            'delivery_time' => random_int(10, 120),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
