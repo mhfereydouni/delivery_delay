@@ -25,6 +25,11 @@ class DelayReportFactory extends Factory
 
     public function resolved(): static
     {
-        return $this->state(['resolved_at', Carbon::now()]);
+        return $this->state(['resolved_at' => Carbon::now()]);
+    }
+
+    public function withoutAgent(): static
+    {
+        return $this->state(['agent_id' => null]);
     }
 }

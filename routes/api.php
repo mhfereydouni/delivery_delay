@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EstimateDeliveryTimeController;
 use App\Http\Controllers\ReportDelayController;
+use App\Http\Controllers\ShowAgentAssignedDelayReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('orders')->name('orders.')->group(function () {
@@ -11,5 +12,11 @@ Route::prefix('orders')->name('orders.')->group(function () {
         Route::post('report-delay', ReportDelayController::class)
             ->can('reportDelay', 'order')
             ->name('report-delay');
+    });
+});
+
+Route::prefix('agents')->name('agents.')->group(function () {
+    Route::prefix('{agent}')->group(function () {
+        Route::get('delay-report', ShowAgentAssignedDelayReportController::class)->name('delay-report');
     });
 });
