@@ -48,3 +48,11 @@ docker compose -p delivery_delay run --rm artisan optimize --env=testing
 
 docker compose -p delivery_delay run --rm artisan test
 ```
+
+
+## future improvements
+* Upgrade laravel version
+* Make API calls more robust. For example, we can add retry mechanism.
+* Add GitHub actions for code style and tests.
+* Put Database and other credentials in .env and use environment variables in docker compose.
+* There are some messages in the app. We can put them in translation files and add support for other languages.

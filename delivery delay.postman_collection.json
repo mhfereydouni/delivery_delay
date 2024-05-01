@@ -152,7 +152,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Wed, 01 May 2024 10:58:27 GMT"
+							"value": "Wed, 01 May 2024 13:00:54 GMT"
 						},
 						{
 							"key": "Content-Type",
@@ -164,7 +164,7 @@
 						},
 						{
 							"key": "X-Ratelimit-Remaining",
-							"value": "57"
+							"value": "58"
 						},
 						{
 							"key": "Access-Control-Allow-Origin",
@@ -180,7 +180,7 @@
 						},
 						{
 							"key": "Content-Length",
-							"value": "57"
+							"value": "69"
 						},
 						{
 							"key": "Content-Encoding",
@@ -188,7 +188,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "\"Your order delivery will be investigated by agents.\""
+					"body": "{\n    \"message\": \"Your order delivery will be investigated by agents.\"\n}"
 				}
 			]
 		},
