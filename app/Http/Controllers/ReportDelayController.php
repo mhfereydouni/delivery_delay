@@ -19,7 +19,7 @@ class ReportDelayController extends Controller
 
             return response()->json(['data' => [
                 'new_delivery_time' => $newDeliveryTime,
-                'will_arrive_at' => Carbon::now()->addMinutes($newDeliveryTime)->toDateTimeString()
+                'will_arrive_at' => Carbon::now()->addMinutes($newDeliveryTime)->toDateTimeString(),
             ]], 201);
         }
 
@@ -27,7 +27,6 @@ class ReportDelayController extends Controller
 
             return response()->json(['message' => 'Your last delay report is still under investigation.']);
         }
-
 
         $order->delayReports()->create();
 

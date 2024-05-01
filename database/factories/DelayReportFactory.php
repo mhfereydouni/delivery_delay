@@ -15,8 +15,8 @@ class DelayReportFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => fn() => Order::factory()->create()->id,
-            'agent_id' => fn() => Agent::factory()->create()->id,
+            'order_id' => fn () => Order::factory()->create()->id,
+            'agent_id' => fn () => Agent::factory()->create()->id,
             'resolved_at' => null,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

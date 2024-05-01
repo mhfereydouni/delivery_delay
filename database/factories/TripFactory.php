@@ -15,7 +15,7 @@ class TripFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => fn() => Order::factory()->create()->id,
+            'order_id' => fn () => Order::factory()->create()->id,
             'status' => $this->faker->randomElement(TripStatus::cases()),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

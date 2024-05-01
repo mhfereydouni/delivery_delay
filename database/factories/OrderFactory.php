@@ -14,7 +14,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'vendor_id' => fn() => Vendor::factory()->create()->id,
+            'vendor_id' => fn () => Vendor::factory()->create()->id,
             'delivery_time' => random_int(10, 120),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

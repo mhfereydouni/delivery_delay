@@ -18,7 +18,6 @@ class DelayReport extends Model
         'resolved_at' => 'datetime',
     ];
 
-
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);

@@ -66,11 +66,10 @@ class ReportDelayTest extends TestCase
         $order = Order::factory()->create(['delivery_time' => 0]);
 
         Http::fake([
-            'http://localhost/orders/' . $order->id . '/eta-mock' => Http::response([
-                'data' => ['eta' => $newEta = random_int(10, 100)]
+            'http://localhost/orders/'.$order->id.'/eta-mock' => Http::response([
+                'data' => ['eta' => $newEta = random_int(10, 100)],
             ]),
         ]);
-
 
         Trip::factory()->notDelivered()->for($order)->create();
 
@@ -81,8 +80,8 @@ class ReportDelayTest extends TestCase
                 ->assertJson([
                     'data' => [
                         'new_delivery_time' => $newEta,
-                        'will_arrive_at' => Carbon::now()->addMinutes($newEta)->toDateTimeString()
-                    ]
+                        'will_arrive_at' => Carbon::now()->addMinutes($newEta)->toDateTimeString(),
+                    ],
                 ]);
 
             $this->assertDatabaseHas(DelayReport::class, [
@@ -92,8 +91,8 @@ class ReportDelayTest extends TestCase
             ]);
 
             Http::assertSent(
-                fn(Request $request) => $request->method() === 'GET'
-                    && $request->url() === 'http://localhost/orders/' . $order->id . '/eta-mock'
+                fn (Request $request) => $request->method() === 'GET'
+                    && $request->url() === 'http://localhost/orders/'.$order->id.'/eta-mock'
             );
         });
     }

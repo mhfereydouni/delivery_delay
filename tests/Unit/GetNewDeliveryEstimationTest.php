@@ -14,14 +14,14 @@ class GetNewDeliveryEstimationTest extends TestCase
     {
         Http::fake([
             'http://localhost/orders/1/eta-mock' => Http::response([
-                'data' => ['eta' => $newEta = random_int(10, 100)]
+                'data' => ['eta' => $newEta = random_int(10, 100)],
             ]),
         ]);
 
         $this->assertEquals($newEta, (new GetNewDeliveryEstimation)(1));
 
         Http::assertSent(
-            fn(Request $request) => $request->method() === 'GET'
+            fn (Request $request) => $request->method() === 'GET'
                 && $request->url() === 'http://localhost/orders/1/eta-mock'
         );
 

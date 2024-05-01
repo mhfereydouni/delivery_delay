@@ -23,7 +23,7 @@ class ShowAgentAssignedDelayReportController extends Controller
                 ->oldest()
                 ->first();
 
-            if (!is_null($delayReport) && is_null($delayReport->agent_id)) {
+            if (! is_null($delayReport) && is_null($delayReport->agent_id)) {
                 $delayReport?->update(['agent_id' => $agent->id]);
             }
 
